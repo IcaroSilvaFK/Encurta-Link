@@ -148,7 +148,7 @@ export const Box = styled.footer`
     width: 100%;
     margin-top: 100px;
     div {
-      width: 80%;
+      width: 90%;
       height: auto;
       flex-direction: column;
       background-color: transparent;
@@ -157,6 +157,8 @@ export const Box = styled.footer`
       input {
         background-color: #fff;
         border-radius: 5px;
+        width: 100%;
+        text-align: center;
       }
     }
   }
