@@ -47,6 +47,7 @@ export const Container = styled.main`
   }
 
   @media (max-width: 500px) {
+    padding: 20px 0;
     header {
       text-align: center;
 

@@ -4,6 +4,8 @@ import { BsSearch } from "react-icons/bs";
 import { IoIosSend } from "react-icons/io";
 import { IoCopy } from "react-icons/io5";
 import { BiCommentError } from "react-icons/bi";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input } from "../../components/Input";
 
@@ -15,6 +17,13 @@ interface IFormProps {
   url: string;
 }
 
+const schema = yup.object().shape({
+  url: yup
+    .string()
+    .url("O campo precisa ser uma url valida")
+    .required("O campo é obrigatório"),
+});
+
 export function HomePage() {
   const [uri, setUri] = useState("Clique no botão para copiar  a url");
   const [error, setError] = useState(false);
@@ -25,11 +34,23 @@ export function HomePage() {
     defaultValues: {
       url: "",
     },
+
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     document.title = "ENCURTALINKS";
   }, []);
+  console.log(!!props.formState.errors.url?.message);
+
+  useEffect(() => {
+    toast.error(props.formState.errors.url?.message, {
+      draggable: true,
+      position: "top-center",
+      theme: "dark",
+      closeOnClick: true,
+    });
+  }, [props.formState.errors.url?.message]);
 
   const handleSendUri: SubmitHandler<IFormProps> = async ({ url }) => {
     const response = await axios.get(`https://is.gd/create.php`, {
